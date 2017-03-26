@@ -37,7 +37,7 @@ mysql>grant replication slave,replication client on *.* to 'root'@'192.168.0.%.%
 mysql>flush privileges;  
 全局读锁：
 mysql>flush tables with read lock
-另外开一个cmd,导出 testcat的数据： mysqldump -uroot –palvin testcat>testcat.sql; 
+另外开一个cmd,导出 testcat的数据： mysqldump -uroot –palvin testcat>testcat.sql;  该文件复制到从服务器
 另外开一个cmd,登陆mysql: mysql -uroot -palvin
 			  查看master 状态 : show master status \G;
 			  ---------------------------------------
@@ -45,7 +45,7 @@ mysql>flush tables with read lock
 slave:从库配置
 登陆数据库：mysql -uroot -palvin
 创建数据库：mysql>create database testcat DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-
+导入主库数据：mysql>source C:/db.sql
 修改配置文件：C:\Documents and Settings\All Users\Application Data\MySQL\MySQL Server 8.0\my.ini
 
 server-id=103  #根据自己的具体情况修改，一遍用ip最后一个
