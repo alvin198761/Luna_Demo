@@ -1,0 +1,134 @@
+﻿mycat 读写分离，操作记录
+测试环境：
+master: 物理机，win7x64 家庭版
+		ip:192.168.0.103
+		Mysql: 8.0 ,database:testcat
+		testcat 有一张表，内有数据,表的创建语句
+		create table testt (id int primary key ,name varchar(255));
+
+slave: 虚拟机，win7x64 家庭版
+	   ip:192.168.0.107
+	   Mysql:8.0 ,database:testcat
+
+mycat: 1.5.1
+jdk: 1.8
+
+----------------------
+master: 主库配置
+修改配置文件：C:\Documents and Settings\All Users\Application Data\MySQL\MySQL Server 8.0\my.ini
+
+server-id=103  #根据自己的具体情况修改，一遍用ip最后一个
+gtid_mode=on	# 启动 gtid 注意:必须 5.6 +
+enforce_gtid_consistency=on  #强制gtid一致性，开启后对于特定create table不被支持
+skip_slave_start=1
+
+log_bin=master-binlog  
+log-slave-updates=1      
+binlog_format=row
+binlog-do-db=testcat	#要同步的数据库名称
+
+重启mysql:
+>net stop mysql80
+>net start mysql80
+
+登录： mysql -uroot -palvin 
+设置主从操作的权限：
+mysql>grant replication slave,replication client on *.* to 'root'@'192.168.0.%.%' identified by 'alvin';  
+mysql>flush privileges;  
+全局读锁：
+mysql>flush tables with read lock
+另外开一个cmd,导出 testcat的数据： mysqldump -uroot –palvin testcat>testcat.sql; 
+另外开一个cmd,登陆mysql: mysql -uroot -palvin
+			  查看master 状态 : show master status \G;
+			  ---------------------------------------
+--------主库暂时结束，
+slave:从库配置
+登陆数据库：mysql -uroot -palvin
+创建数据库：mysql>create database testcat DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+修改配置文件：C:\Documents and Settings\All Users\Application Data\MySQL\MySQL Server 8.0\my.ini
+
+server-id=103  #根据自己的具体情况修改，一遍用ip最后一个
+gtid_mode=on	# 启动 gtid 注意:必须 5.6 +
+enforce_gtid_consistency=on  #强制gtid一致性，开启后对于特定create table不被支持
+skip_slave_start=1
+
+log_bin=master-binlog  
+log-slave-updates=1      
+binlog_format=row
+replicate-do-db=testcat	#要同步的数据库名称
+
+重启mysql:
+>net stop mysql80
+>net start mysql80
+
+登录： mysql -uroot -palvin 
+设置主从操作的权限：
+mysql>grant replication slave,replication client on *.* to 'root'@'192.168.0.%.%' identified by 'alvin';  
+mysql>flush privileges;  
+设置信息：
+mysql>stop slave;
+mysql>change master to master_host='192.168.0.103',
+	 >master_user='root',
+	 >master_password='alvin',
+	 >master_auto_position=1,
+	 >master_retry_counte=3;
+mysql>start slave;
+查看状态：
+mysql>show slave status \G;
+主要关注这两个：
+Slave_IO_Running: Yes
+Slave_SQL_Running: Yes
+--------------------------------从库配置完毕
+
+主库：mysql>unlock tables;
+-------------------------------主库配置结束
+mycat 配置：
+下载，解压，到bin 目录，
+安装：mycat.bat install
+到 conf 目录：
+server.xml
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mycat:server SYSTEM "server.dtd">
+<mycat:server xmlns:mycat="http://org.opencloudb/">
+	<system>
+	<property name="defaultSqlParser">druidparser</property>
+ 
+	</system>
+	<user name="root">
+		<property name="password">alvin</property>
+		<property name="schemas">testcat</property>
+	</user>
+ 
+
+</mycat:server>
+
+rule.xml ：分片规则默认，可以自定义
+schema.xml:
+<?xml version="1.0"?>
+<!DOCTYPE mycat:schema SYSTEM "schema.dtd">
+<mycat:schema xmlns:mycat="http://org.opencloudb/" >
+	<schema name="testcat" checkSQLschema="false" sqlMaxLimit="100">	
+		<table name="testt" dataNode="dn1"></table>
+	</schema>
+	<dataNode name="dn1" dataHost="localhost1" database="testcat" />	 
+	<dataHost name="localhost1" maxCon="1000" minCon="10" balance="1" writeType="0" dbType="mysql" dbDriver="native">
+		<heartbeat>select user()</heartbeat>
+		<writeHost host="hostM1" url="192.168.0.103:3306" user="root" password="alvin">
+			<!-- <readHost host="hostS1" url="192.168.0.107:3306" user="root" password="alvin" weight="1" /> -->
+		</writeHost>
+		<writeHost host="hostS1" url="192.168.0.107:3306" user="root" password="alvin">
+		</writeHost>
+	</dataHost>
+</mycat:schema>
+
+启动mycat : mycat.bat start
+登陆mycat : mysql -uroot -P8066 -p 回车 输入密码 alvin
+读写分离测试：
+mysql>insert into testt(id,name) values(2,'2222');
+mysql>select * from testt;
+结果显示正确，
+----------------------mycat 配置完成
+分别取读库和写库查看插入的数据是否正确
+
