@@ -8,6 +8,9 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +21,8 @@ import java.util.Map;
 @SpringBootApplication
 @Configuration
 @ServletComponentScan
-public class Application extends SpringBootServletInitializer {
+@EnableWebSocket
+public class Application extends SpringBootServletInitializer implements WebSocketConfigurer {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -34,4 +38,11 @@ public class Application extends SpringBootServletInitializer {
         registration.setInitParameters(params);
         return registration;
     }
+
+    @Override
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
+
+    }
+    //https://segmentfault.com/a/1190000007397316
+
 }
