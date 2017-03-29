@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+X-COMMENT: Main-Class will be added automatically by build
+SplashScreen-Image: publicresource/splash.png
+Main-Class: org.alvin.tools.Application
+Class-Path: lib/swingC.jar
