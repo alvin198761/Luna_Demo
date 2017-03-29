@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.version>4.1.7.RELEASE</spring.version>
+        <servlet.version>2.5</servlet.version>
+        <log4j.version>1.2.17</log4j.version>
+        <slf4j.version>1.7.7</slf4j.version>
+        <hibernate.version>4.3.10.Final</hibernate.version>
+        <common-dbcp.version>1.4</common-dbcp.version>
+        <spring-data-jpa.version>1.4.1.RELEASE</spring-data-jpa.version>
+        <spring.security.version>3.2.5.RELEASE</spring.security.version>
+    </properties>
+
+    <groupId>ui.alvin.home</groupId>
+    <artifactId>spring-mvc</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>ui-vue</module>
+        <module>ui-ant-design</module>
+        <module>ui-vue-boot</module>
+        <module>ui-boot-ant-design</module>
+    </modules>
+
+
+</project>
