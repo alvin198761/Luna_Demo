@@ -5,5 +5,5 @@ swingc 是国内的牛人写的一套swing控件库，我使用它做过项目�
 
 我这里做个例子，方便初学者使用，也是向大神致敬
 
-![image](https://github.com/alvin198761/swingc_demo/blob/master/pic/swingc.png)
+![image](https://github.com/alvin198761/Luna_Demo/blob/master/swingc_demo/pic/swingc.png)
 
