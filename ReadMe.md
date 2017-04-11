@@ -19,5 +19,6 @@
 7. [mobx_antd_demo](https://github.com/alvin198761/Luna_Demo/tree/master/mobx_antd_demo) :2273410177
 8. [project_tmplate](https://github.com/alvin198761/Luna_Demo/tree/master/project_tmplate) :2273410177
 9. [swingc_demo](https://github.com/alvin198761/Luna_Demo/tree/master/swingc_demo) :2273410177
-9. [SwingFlashDemo](https://github.com/alvin198761/Luna_Demo/tree/master/SwingFlashDemo) :870708581
-9. [SwingTrapDemo](https://github.com/alvin198761/Luna_Demo/tree/master/SwingTrapDemo) :870708581
+10. [SwingFlashDemo](https://github.com/alvin198761/Luna_Demo/tree/master/SwingFlashDemo) :870708581
+11. [SwingTrapDemo](https://github.com/alvin198761/Luna_Demo/tree/master/SwingTrapDemo) :870708581
+12. [GIFTest](https://github.com/alvin198761/Luna_Demo/tree/master/GIFTest) :444716720
