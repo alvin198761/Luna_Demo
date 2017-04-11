@@ -13,15 +13,15 @@ import org.alvin.swing.ui.model.UserInfoModel;
  *
  * @author Administrator
  */
-public class TableDemoFrame extends javax.swing.JFrame {
+public class Table_JDBC_DemoFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form TableDemoFrame
      */
-    public TableDemoFrame() {
+    public Table_JDBC_DemoFrame() {
         initComponents();
-        this.setTitle("jtable 简单示例");
-        this.jTable1.setModel(new UserInfoModel("mock"));
+        this.setTitle("jtable jdbc 示例");
+        this.jTable1.setModel(new UserInfoModel("jdbc"));
         this.addBtn.setAction(new AddAction((UserInfoModel) this.jTable1.getModel()));
         this.delBtn.setAction(new DeleteAction(this.jTable1));
         this.setLocationRelativeTo(null);
@@ -87,20 +87,21 @@ public class TableDemoFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TableDemoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Table_JDBC_DemoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TableDemoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Table_JDBC_DemoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TableDemoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Table_JDBC_DemoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TableDemoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Table_JDBC_DemoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TableDemoFrame().setVisible(true);
+                new Table_JDBC_DemoFrame().setVisible(true);
             }
         });
     }

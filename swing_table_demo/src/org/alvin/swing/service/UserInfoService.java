@@ -13,7 +13,7 @@ import org.alvin.swing.dao.UserInfoDao;
  *
  * @author Administrator 模拟业务逻辑
  */
-public class UserInfoService {
+public class UserInfoService implements IUserService{
 
     private UserInfoDao userInfoDao = new UserInfoDao();
 

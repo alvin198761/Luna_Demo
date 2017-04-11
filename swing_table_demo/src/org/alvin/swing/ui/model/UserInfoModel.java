@@ -5,10 +5,11 @@
  */
 package org.alvin.swing.ui.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import org.alvin.swing.bean.UserInfo;
+import org.alvin.swing.service.IUserService;
+import org.alvin.swing.service.UserInfoJDBCService;
 import org.alvin.swing.service.UserInfoService;
 
 /**
@@ -17,13 +18,14 @@ import org.alvin.swing.service.UserInfoService;
  */
 public class UserInfoModel extends AbstractTableModel {
 
-    public UserInfoService userInfoService = new UserInfoService();
+    public IUserService userInfoService;
 
     private List<UserInfo> content;
 
     private String[] columns = {"编号", "名称", "密码", "启用/禁用"};
 
-    public UserInfoModel() {
+    public UserInfoModel(String impl) {
+        this.userInfoService = createServiceImpl(impl);
         this.refresh();
     }
 
@@ -101,6 +103,14 @@ public class UserInfoModel extends AbstractTableModel {
     private void refresh() {
         this.content = this.userInfoService.findAll();
         this.fireTableDataChanged();
+    }
+
+    private static IUserService createServiceImpl(String impl) {
+        if(impl.equals("mock")){
+            return new UserInfoService();
+        }else {
+            return new UserInfoJDBCService();
+        }
     }
 
 }

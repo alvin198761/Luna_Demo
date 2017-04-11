@@ -59,6 +59,13 @@
             <groupId>org.crashub</groupId>
             <artifactId>crash.shell</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxjava -->
+        <dependency>
+            <groupId>io.reactivex.rxjava2</groupId>
+            <artifactId>rxjava</artifactId>
+            <version>2.0.7</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
