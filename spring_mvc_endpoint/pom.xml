@@ -28,6 +28,12 @@
             <artifactId>spring-beans</artifactId>
             <version>4.3.7.RELEASE</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>4.2.2.RELEASE</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
@@ -121,6 +127,7 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
+
     </dependencies>
 
     <build>

@@ -18,13 +18,16 @@ public class WebAppInitializer implements WebApplicationInitializer {
         dynamic.addMapping("/");
         dynamic.setLoadOnStartup(1);
 
-
-        new Thread(() -> {
-            try {
-                CRaSH.main(new String[]{});
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
+//
+//
+//        new Thread(() -> {
+//            try {
+//                CRaSH.main(new String[]{
+//                        "--property crash.telnet.port=3000"
+//                });
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }).start();
     }
 }
