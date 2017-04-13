@@ -36,7 +36,6 @@ public class AppConfig {
         properties.put("crash.auth","simple");
         properties.put("crash.auth.simple.username",user);
         properties.put("crash.auth.simple.password",password);
-//        properties.put("cmdMountPointConfig","classpath:/crash/commands/");
         bootstrap.setConfig(properties);
         return bootstrap;
     }
@@ -53,7 +52,7 @@ public class AppConfig {
 
     @Bean
     public EnvironmentEndpoint environmentEndpoint(){
-        return new EnvironmentEndpoint();
+        return  new EnvironmentEndpoint();
     }
 
 //    @Bean
