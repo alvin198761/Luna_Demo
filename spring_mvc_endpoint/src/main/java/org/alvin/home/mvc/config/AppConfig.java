@@ -4,9 +4,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.EndpointAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.HealthIndicatorAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.MetricRepositoryAutoConfiguration;
+import org.springframework.boot.actuate.endpoint.*;
+import org.springframework.boot.actuate.endpoint.jmx.EndpointMBeanExporter;
 import org.springframework.context.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 @Configuration
@@ -32,7 +36,52 @@ public class AppConfig {
         properties.put("crash.auth","simple");
         properties.put("crash.auth.simple.username",user);
         properties.put("crash.auth.simple.password",password);
+//        properties.put("cmdMountPointConfig","classpath:/crash/commands/");
         bootstrap.setConfig(properties);
         return bootstrap;
     }
+
+    @Bean
+    public EndpointMBeanExporter endpointMBeanExporter(){
+        return  new EndpointMBeanExporter();
+    }
+
+    @Bean
+    public DumpEndpoint dumpEndpoint(){
+        return new DumpEndpoint();
+    }
+
+    @Bean
+    public EnvironmentEndpoint environmentEndpoint(){
+        return new EnvironmentEndpoint();
+    }
+
+//    @Bean
+//    public FlywayEndpoint flywayEndpoint(){
+//        return new FlywayEndpoint():
+//    }
+
+//    @Bean
+//    public HealthEndpoint healthEndpoint(){
+//        return new  HealthEndpoint();
+//    }
+
+    @Bean
+    public MetricsEndpoint metricsEndpoint(){
+        List<PublicMetrics> list = new ArrayList<>();
+        list.add(new SystemPublicMetrics());
+        list.add(new TomcatPublicMetrics());
+        return new MetricsEndpoint(list);
+    }
+
+    @Bean
+    public BeansEndpoint beansEndpoint(){
+        return new BeansEndpoint();
+    }
+
+    @Bean
+    public AutoConfigurationReportEndpoint autoConfigurationReportEndpoint(){
+        return new AutoConfigurationReportEndpoint();
+    }
+
 }

@@ -1,9 +1,5 @@
 package org.alvin.boot.servlet.demo.controller;
 
-import io.reactivex.*;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
