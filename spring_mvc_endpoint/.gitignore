@@ -1,3 +1,6 @@
 .idea
 target
 spring_mvc_endpoint.iml
+logs
+*.iml
+*.ser
