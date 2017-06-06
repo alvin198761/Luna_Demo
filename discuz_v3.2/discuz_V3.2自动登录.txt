@@ -1,0 +1,118 @@
+> 环境部署
+	1.安装 apache mysql php ，以上不赘述
+		apache http.conf 修改：
+		LoadModule php5_module xxx/php5apache2_4.dll
+		PHPIniDir xxx/php-5.6.30-Win32-VC11-x64
+		AddType application/x-httpd-php .php .html .htm
+		AddDefaultCharset UTF-8
+
+		DocumentRoot xxx/www/项目目录
+		<Directory xxx/www/项目目录
+	2.把项目放入 htdocs中
+	3.放开 url ,soap,mysql 等相关功能权限
+	3.x64 需要吧 php5ts.dll libeay32.dll ssleay.dll php.ini 放入 C:\Windows\ 下，其他windows版本放入 system32 下
+	4.启动 ApacheMonitor.exe 访问 localhost 完成安装
+
+> 各个代码 uploads/forum.php ，这里并不是逻辑，具体逻辑可能跟你的系统有关，我只是提供了各种方法的具体代码
+	//定义，为了进入别的php
+	if (!defined('UC_API')) {
+    		define('UC_API', '');
+	}
+	// 自动登录导入
+	require './source/class/class_core.php';
+	require './source/function/function_forum.php';
+	require './source/function/function_member.php';
+
+	//自动注册用户：注意，密码一定不能加密
+	$result = checkuser($username, $password, $email); //自定义的注册方法， 放在 function_member.php中
+
+	//查看用户是否存在
+	$result = checkusername($username); //自定义方法，放在 function_member.php中
+	if ($result != -3) {
+		//不存在
+	}
+	
+	//自动激活用户  
+	DB::query("insert into " . DB::table("common_member") . " (uid,email,username,password) values('" . $result["uid"] . "','" . $result["email"] . "','" . $result["username"] . "','" . $result["password"] . "')");
+		 
+	//自动登录
+	$username ="admin";
+	$password = md5("123456");
+    	$userdata = uc_user_login($username, $password);
+	list($uid, $username, $password, $email) = $userdata;
+    	echo uc_user_synlogin($uid);   //输入同步登录的javascript代码
+    	$result = userlogin($username, $password, 0, '');
+    	if ($result['status'] == -1) {
+        	loaducenter();
+	        $result['member'] = getuserbyuid($uid);
+        	$result['status'] = 1;
+    	}
+    	if ($result['status'] > 0) {
+        	// 跳转到首页
+	        header('Location: ' . './forum.php');	
+        	syncLoginState($result, $username, $password); //同步登陆状态自定义的方法，放在 function_member.php中
+    	}
+
+
+//function_member.php 自定义方法
+function checkusername($username)
+{
+    loaducenter();
+    return uc_user_checkname($username);
+}
+
+function userregister($username, $password, $email)
+{
+    loaducenter();
+    return uc_user_register($username, $password, $email);
+}
+
+function checkuser($username, $password, $email)
+{
+    include ROOT_PATH . CONFIG_UC;
+    include ROOT_PATH . './uc_client/client.php';
+
+    $error = '';
+    $ucresult = uc_user_login($username, $password);
+    list($tmp['uid'], $tmp['username'], $tmp['password'], $tmp['email']) = uc_addslashes($ucresult);
+    $ucresult = $tmp;
+    if ($ucresult['uid'] <= 0) {
+        $uid = uc_user_register($username, $password, $email);
+        if ($uid == -1 || $uid == -2) {
+            $error = 'admin_username_invalid';
+        } elseif ($uid == -4 || $uid == -5 || $uid == -6) {
+            $error = 'admin_email_invalid';
+        } elseif ($uid == -3) {
+            $error = 'admin_exist_password_error';
+        }
+    } else {
+        $uid = $ucresult['uid'];
+        $email = $ucresult['email'];
+        $password = $ucresult['password'];
+    }
+
+    if (!$error && $uid > 0) {
+        $password = md5($password);
+        uc_user_addprotected($username, '');
+    } else {
+        $uid = 0;
+        $error = empty($error) ? 'error_unknow_type' : $error;
+    }
+    return array('uid' => $uid, 'username' => $username, 'password' => $password, 'email' => $email, 'error' => $error);
+}
+
+function syncLoginState($result, $username, $password)
+{
+    global $_G;
+    $questionexist = $result['ucresult']['uid'] == -3;
+    $auth = authcode($username . "\t" . $password . "\t" . ($questionexist ? 1 : 0), 'ENCODE', $_G['config']['security']['authkey']);
+    setloginstatus($result['member'], 2592000);
+    checkfollowfeed();
+
+    C::t('common_member_status')->update($_G['uid'], array('lastip' => $_G['clientip'], 'port' => $_G['remoteport'], 'lastvisit' => TIMESTAMP, 'lastactivity' => TIMESTAMP));
+    return $this->setting['allowsynlogin'] ? uc_user_synlogin($_G['uid']) : '';
+}
+
+ 
+   
+	
