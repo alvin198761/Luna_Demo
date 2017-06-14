@@ -25,4 +25,5 @@
 13. [KeyboardTest](https://github.com/alvin198761/Luna_Demo/tree/master/KeyboardTest) :444716720
 14. [GaussianTest](https://github.com/alvin198761/Luna_Demo/tree/master/GaussianTest) :444716720
 15. [hide_icon_frame](https://github.com/alvin198761/Luna_Demo/tree/master/hide_icon_frame) :2273410177
+15. [discuz_v3.2](https://github.com/alvin198761/Luna_Demo/tree/master/discuz_v3.2) :2273410177
 16. [TestDome](https://github.com/alvin198761/Luna_Demo/tree/master/TestDome) :2264741929
