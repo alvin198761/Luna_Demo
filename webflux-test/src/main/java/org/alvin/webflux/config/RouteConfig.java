@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.server.RouterFunction;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
+import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
@@ -23,6 +24,8 @@ public class RouteConfig {
     @Bean
     public RouterFunction<?> routerFunction() {
         return route(GET("/api/user").and(accept(MediaType.APPLICATION_JSON)), userHandler::fetchAll)
-                .and(route(GET("/api/user/{id}").and(accept(MediaType.APPLICATION_JSON)), userHandler::fetchById));
+                .and(route(GET("/api/user/{id}").and(accept(MediaType.APPLICATION_JSON)), userHandler::fetchById))
+                .and(route(GET("/api/img").and(accept(MediaType.parseMediaType("image/jpeg"))), userHandler::imgs))
+                .and(route(POST("/api/upload"),userHandler::upload));
     }
 }
