@@ -87,7 +87,7 @@ public class ConnectUtils {
                     ps.addBatch();
                 }
                 int[] tmpRes = ps.executeBatch();
-                System.arraycopy(tmpRes, 0, res, res.length - 1 - tmpRes.length, tmpRes.length);
+                System.arraycopy(tmpRes, 0, res, res.length - tmpRes.length, tmpRes.length);
                 conn.commit();
                 return res;
             } catch (SQLException ex) {
