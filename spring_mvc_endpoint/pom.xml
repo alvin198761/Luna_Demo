@@ -16,17 +16,17 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>4.3.7.RELEASE</version>
+            <version>5.1.1.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>4.3.7.RELEASE</version>
+            <version>5.1.1.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>4.3.7.RELEASE</version>
+           <version>5.1.1.RELEASE</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
         <dependency>
@@ -37,12 +37,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>4.3.7.RELEASE</version>
+            <version>5.1.1.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>4.3.7.RELEASE</version>
+           <version>5.1.1.RELEASE</version>
         </dependency>
 
         <dependency>
