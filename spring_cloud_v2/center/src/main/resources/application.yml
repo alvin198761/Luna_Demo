@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: prod
+  application:
+    name: center_server
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: center_server
+server:
+  port: 8001
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/
+

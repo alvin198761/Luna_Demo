@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: prod
+  application:
+    name: data_server
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: data_server
+server:
+  port: 8002
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/
+

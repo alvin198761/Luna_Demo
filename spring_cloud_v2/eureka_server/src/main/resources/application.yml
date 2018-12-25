@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: prod
+  application:
+    name: sc_v2_eureka
+server:
+  port: 8000
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/
